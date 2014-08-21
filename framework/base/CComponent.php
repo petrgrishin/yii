@@ -398,7 +398,7 @@ class CComponent
 
 	/**
 	 * Determines whether a property is defined.
-	 * A property is defined if there is a getter or setter method
+	 * A property is defined if there is a getter or setter method or defined property
 	 * defined in the class. Note, property names are case-insensitive.
 	 * @param string $name the property name
 	 * @return boolean whether the property is defined
@@ -407,7 +407,8 @@ class CComponent
 	 */
 	public function hasProperty($name)
 	{
-		return method_exists($this,'get'.$name) || method_exists($this,'set'.$name);
+		// todo property_exists PHP >5.3 true for private property also
+		return false === property_exists($this, $name) || method_exists($this,'get'.$name) || method_exists($this,'set'.$name);
 	}
 
 	/**
